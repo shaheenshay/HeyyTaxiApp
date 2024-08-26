@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "uber-mobile",
-    "slug": "uber-mobile",
+    "name": "HeyyTaxi!",
+    "slug": "heyytaxi",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
