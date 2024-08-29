@@ -83,7 +83,7 @@ export const onboarding = [
         id: 2,
         title: "Enjoy secure rides with safety features built just for you.",
         description:
-            " Every ride is backed by safety features designed just for you. From driver background checks to real-time tracking, your security is always our focus.",
+            " Your safety is our priority, with driver background checks and real-time tracking for every ride",
         image: images.onboarding2,
     },
     {
