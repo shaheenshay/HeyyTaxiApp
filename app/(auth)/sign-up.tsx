@@ -2,6 +2,7 @@ import CustomButton from "@/components/CustomButton";
 import InputField from "@/components/InputField";
 import OAuth from "@/components/OAuth";
 import { icons, images } from "@/constants";
+import { fetchAPI } from "@/lib/fetch";
 import { useSignUp } from "@clerk/clerk-expo";
 import { Link, router } from "expo-router";
 import { useState } from "react";
@@ -10,7 +11,7 @@ import ReactNativeModal from "react-native-modal";
 
 const SignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
-  const  [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
@@ -53,7 +54,15 @@ const SignUp = () => {
       });
 
       if (completeSignUp.status === "complete") {
-        await setActive({ session: completeSignUp.createdSessionId });
+        await fetchAPI("/(api)/user", {
+          method: "POST",
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            clerkId: completeSignUp.createdUserId,
+          }),
+        }),
+          await setActive({ session: completeSignUp.createdSessionId });
         setVerification({ ...verification, state: "success" });
       } else {
         setVerification({
@@ -86,7 +95,7 @@ const SignUp = () => {
             placeholder="Enter name"
             icon={icons.person}
             value={form.name}
-            onChangeText={(value) => setForm({ ...form, name: value})}
+            onChangeText={(value) => setForm({ ...form, name: value })}
           />
           <InputField
             label="Email"
@@ -126,7 +135,7 @@ const SignUp = () => {
         <ReactNativeModal
           isVisible={verification.state === "pending"}
           onModalHide={() => {
-            if(verification.state === 'success') setShowSuccessModal(true)
+            if (verification.state === "success") setShowSuccessModal(true);
           }}
         >
           <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
@@ -152,7 +161,7 @@ const SignUp = () => {
               </Text>
             )}
 
-            <CustomButton 
+            <CustomButton
               title="Verify Email"
               onPress={onPressVerify}
               className="mt-5 bg-success-500"
@@ -176,7 +185,7 @@ const SignUp = () => {
               title="Go to Home"
               onPress={() => {
                 setShowSuccessModal(false);
-                 router.push("/(root)/(tabs)/home")
+                router.push("/(root)/(tabs)/home");
               }}
               className="mt-5"
             />
