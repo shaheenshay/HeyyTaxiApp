@@ -144,7 +144,7 @@ export default function Page() {
 
       let location = await Location.getCurrentPositionAsync();
 
-      let address = await Location.reverseGeocodeAsync({
+      const address = await Location.reverseGeocodeAsync({
         latitude: location.coords?.latitude!,
         longitude: location.coords?.longitude!,
       });
